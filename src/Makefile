@@ -29,14 +29,14 @@
 MAJOR=1
 MINOR=0
 PATCH=0
-RELEASE=release
+RELEASE=
 
-VERSION=${MAJOR}.${MINOR}.${PATCH}-${RELEASE}
+VERSION=${MAJOR}.${MINOR}.${PATCH}${RELEASE}
 
 all: minify
 
 minify: catenate
-	/opt/yuicompressor/bin/yuicompressor -o target/net.dushin.foundation-${VERSION}-min.js target/net.dushin.foundation-${VERSION}.js
+	/opt/yuicompressor/bin/yuicompressor -o target/net.dushin.foundation-${VERSION}.js target/tmp.js
 
 catenate: clean target
 	cat main/js/net/dushin/foundation/namespace.js \
@@ -44,10 +44,10 @@ catenate: clean target
         | sed 's/MINOR_VERSION/${MINOR}/g' \
         | sed 's/PATCH_VERSION/${PATCH}/g' \
         | sed 's/RELEASE_VERSION/\"${RELEASE}\"/g' \
-        >> target/net.dushin.foundation-${VERSION}.js
-	cat main/js/net/dushin/foundation/exception.js >> target/net.dushin.foundation-${VERSION}.js
-	cat main/js/net/dushin/foundation/async.js >> target/net.dushin.foundation-${VERSION}.js
-	cat main/js/net/dushin/foundation/lists.js >> target/net.dushin.foundation-${VERSION}.js
+        >> target/tmp.js
+	cat main/js/net/dushin/foundation/exception.js >> target/tmp.js
+	cat main/js/net/dushin/foundation/async.js >> target/tmp.js
+	cat main/js/net/dushin/foundation/lists.js >> target/tmp.js
 
 target:
 	mkdir target
